@@ -12,6 +12,28 @@ var PageGenerator = module.exports = function PageGenerator(args, options, confi
 
 util.inherits(PageGenerator, yeoman.generators.NamedBase);
 
+
+PageGenerator.prototype.askFor = function askFor() {
+	var cb = this.async();
+
+	// have Yeoman greet the user.
+	console.log(this.yeoman);
+
+	var prompts = [
+		{
+			name: 'pageName',
+			message: 'What is a page name?'
+		}
+	];
+
+	this.prompt(prompts, function (props) {
+		this.pageName = props.pageName;
+
+		cb();
+	}.bind(this));
+};
+
 PageGenerator.prototype.files = function files() {
-  this.copy('somefile.js', 'somefile.js');
+  this.template('page.js', 'js/page.js');
+  this.template('page.less', 'less/page.less');
 };

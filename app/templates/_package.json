@@ -1,5 +1,18 @@
 {
-  "name": "package",
-  "version": "0.0.0",
-  "dependencies": {}
+	"name": "package",
+	"version": "0.0.1",
+	"dependencies": {},
+	"devDependencies": {
+		"grunt": "*",
+		"grunt-contrib-jshint": "*",
+		"grunt-contrib-clean": "*",
+		"grunt-contrib-cssmin": "*",
+		"grunt-contrib-concat": "*",
+		"grunt-contrib-uglify": "*",
+		"grunt-contrib-copy": "*",
+		"grunt-contrib-handlebars": "*",
+		"grunt-s3": "*",
+		"grunt-image-embed": "*",
+		"grunt-contrib-less": "*"
+	}
 }
