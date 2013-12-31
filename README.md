@@ -26,13 +26,13 @@ Yeoman travels light. He didn't pack any generators when he moved in. You can th
 To install generator-generator-responsive from npm, run:
 
 ```
-$ npm install -g generator-generator-responsive
+$ npm install -g generator-responsive
 ```
 
 Finally, initiate the generator:
 
 ```
-$ yo generator-responsive
+$ yo responsive
 ```
 
 ### Getting To Know Yeoman
