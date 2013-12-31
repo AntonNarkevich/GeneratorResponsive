@@ -1,0 +1,37 @@
+@import "common/variables";
+@import "common/mixins";
+//@import "lesshat.less";
+
+/*************************************************************** BASE CSS FOR TABLETS LANDSCAPE  **************************************************************/
+@media screen {
+  /*Highly important fixes. Don't remove it.*/
+  body {
+    font-family: @HelveticaStack;
+    font-size: 16px;
+
+    -webkit-touch-callout: none; /*prevents the save/open link menu on touch held elements*/
+    -webkit-touch-callout: none; /*prevents the save/open link menu on touch held elements*/
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0); /*prevents text and image selection*/
+    -webkit-text-size-adjust: none; /*removes Android's highlighting of clickable elements*/
+    -webkit-user-select: none; /*prevents font-size changes on device rotation*/
+    -webkit-user-drag: none;
+    -webkit-user-modify: none;
+    -webkit-highlight: none;
+
+    margin: 0;
+    min-width: 320px;
+
+    background: #1d5e98; /* Old browsers */
+    background: linear-gradient(to bottom, #1d5e98 0%, #0d7ab3 9%, #0d7ab3 19%, #134870 30%, #082040 100%); /* W3C */
+    background: -o-linear-gradient(top, #1d5e98 0%, #0d7ab3 9%, #0d7ab3 19%, #134870 30%, #082040 100%); /* Opera 11.10+ */
+    background: -moz-linear-gradient(top, #1d5e98 0%, #0d7ab3 9%, #0d7ab3 19%, #134870 30%, #082040 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #1d5e98), color-stop(9%, #0d7ab3), color-stop(19%, #0d7ab3), color-stop(30%, #134870), color-stop(100%, #082040)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #1d5e98 0%, #0d7ab3 9%, #0d7ab3 19%, #134870 30%, #082040 100%); /* Chrome10+,Safari5.1+ */
+    background: -ms-linear-gradient(top, #1d5e98 0%, #0d7ab3 9%, #0d7ab3 19%, #134870 30%, #082040 100%); /* IE10+ */
+  }
+}
+
+/*************************************************************** BASE CSS FOR PHONES LANDSCAPE  **************************************************************/
+@media screen and (max-width: <%= mobileResolution %>px) {
+
+}
