@@ -1,0 +1,13 @@
+syntax: glob
+
+# build directories
+build
+
+# temp
+temp
+
+# WS directories
+.idea
+
+# Other
+node_modules

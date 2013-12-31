@@ -2,8 +2,8 @@
 (function initClientMap() {
 	responsify.clientMap = {
 		bounds: {
-			phone: { minWidth: 2, maxWidth: 767 },
-			tablet: { minWidth: 768 },
+			phone: { minWidth: 2, maxWidth: <%= tabletResolution - 1 %> },
+			tablet: { minWidth: <%= tabletResolution %> },
 			desktop: { maxWidth: 1 }
 		},
 		sources: {

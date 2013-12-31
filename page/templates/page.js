@@ -1,4 +1,4 @@
 /*global UO, jQ, RD*/
-RD.clientFnManager.set("<%= pageName %>", function () {
+RD.clientFnManager.set("run<%= capitaliseFirstLetter(name) %>", function () {
 
 });

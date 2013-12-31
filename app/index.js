@@ -2,7 +2,7 @@
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
-
+var fs = require('fs');
 
 var GeneratorResponsiveGenerator = module.exports = function GeneratorResponsiveGenerator(args, options, config) {
 	yeoman.generators.Base.apply(this, arguments);
@@ -39,24 +39,41 @@ GeneratorResponsiveGenerator.prototype.askFor = function askFor() {
 		},
 		{
 			name: 's3Key',
-			message: 'What is your s3 key?',
+			message: 'What is your s3 key? You can set it later.',
 			default: 'HereShouldBeYourS3Key'
 		},
 		{
 			name: 's3Secret',
-			message: 'What is your s3 secret?',
+			message: 'What is your s3 secret? You can set it later.',
 			default: 'HereShouldBeYourS3Secret'
 		}
 	];
 
+
 	this.prompt(prompts, function (props) {
-		this.projectName = props.projectName;
+		var config = {
+			projectName: props.projectName,
 
-		this.mobileResolution = props.mobileResolution;
-		this.tabletResolution = props.tabletResolution;
+			mobileResolution: props.mobileResolution,
+			tabletResolution: props.tabletResolution,
 
-		this.s3Key = props.s3Key;
-		this.s3Secret = props.s3Secret;
+			s3Key: props.s3Key,
+			s3Secret: props.s3Secret
+		};
+
+		for (var propName in config) {
+			if (config.hasOwnProperty(propName)) {
+				this[propName] = config[propName];
+			}
+		}
+
+		fs.writeFile('respConfig.json', JSON.stringify(config, null, 4), function(err) {
+			if(err) {
+				console.log(err);
+			} else {
+				console.log("\tConfig saved to respConfig.json");
+			}
+		});
 
 		cb();
 	}.bind(this));
@@ -67,18 +84,15 @@ GeneratorResponsiveGenerator.prototype.app = function app() {
 	this.copy('_bower.json', 'bower.json');
 	this.template('_gruntfile.js', 'gruntfile.js');
 
-	this.template('_clientMap.js', 'responsive/sources/js/clientMap.js');
-	this.copy('master.js', 'responsive/sources/js/master.js');
+	this.copy('.hgignore', '.hgignore');
 
-	this.template('_master.less', 'responsive/sources/less/master.less');
-	this.copy('mixins.less', 'responsive/sources/less/common/mixins.less');
-	this.copy('variables.less', 'responsive/sources/less/common/variables.less');
+	this.template('_clientMap.js', 'sources/js/clientMap.js');
+	this.copy('master.js', 'sources/js/master.js');
 
-	this.mkdir('responsive/sources/fonts');
-	this.mkdir('responsive/sources/images');
-};
+	this.template('_master.less', 'sources/less/master.less');
+	this.copy('mixins.less', 'sources/less/common/mixins.less');
+	this.copy('variables.less', 'sources/less/common/variables.less');
 
-GeneratorResponsiveGenerator.prototype.projectfiles = function projectfiles() {
-	this.copy('editorconfig', '.editorconfig');
-	this.copy('jshintrc', '.jshintrc');
+	this.mkdir('sources/fonts');
+	this.mkdir('sources/images');
 };
