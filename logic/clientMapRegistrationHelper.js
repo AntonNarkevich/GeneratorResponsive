@@ -35,7 +35,7 @@ function registerJsFile(pageName, clientMapString) {
 	var jsArrayPattern, registrationString, callbackName, newClientMapString;
 
 	/**
-	 * Pattern of the last object in array
+	 * Pattern of the last object in array like js: [{}, {}, {}]
 	 * Warning: nested object are not supported.
 	 * @type {RegExp}
 	 */
@@ -51,7 +51,7 @@ function registerJsFile(pageName, clientMapString) {
 
 	logger.trace('registerJsFile: callbackName is ' + callbackName);
 
-	registrationString = "{ src: 'pageName.js', contentCondition: ['#SomeUniqueElementIdFromThePage'], callback: 'callBackName'}"
+	registrationString = "{ src: 'pageName.js', contentCondition: ['#SomeUniqueElementIdFromThePage'], callback: 'callBackName'}\n"
 		.replace('pageName', pageName)
 		.replace('callBackName', callbackName);
 
@@ -65,8 +65,33 @@ function registerJsFile(pageName, clientMapString) {
 	return newClientMapString;
 }
 
-function registerCssFile() {
-	return;
+function registerCssFile(pageName, clientMapString) {
+	var cssArrayPattern, registrationString, newClientMapString;
+
+	/**
+	 * Pattern of the last object in array like css: [ {}, {}, {} ]
+	 * Warning: nested object are not supported.
+	 * @type {RegExp}
+	 */
+	cssArrayPattern = new RegExp(
+		'(css\\s*:\\s*\\[' +	//Starts with csss: [
+			'[\\s\\S]*?' +	//Array content, any symbols.
+			'(\\s*)' +	//Getting whites before the last element to keep the aligning.
+			'(?:{[^{]*?}))' +	//Object literal without nested objects.
+			'(?:[^,])'	//	Doesn't have "," in the end. So it's the last in array.
+	);
+
+	registrationString = "{ href: '../css/pageName.css', contentCondition: ['#SomeUniqueElementIdFromThePage']}\n"
+		.replace('pageName', pageName);
+
+	logger.trace('registerCssFile: registrationString is ' + registrationString);
+
+	//Replace with: old content + spacing + reg. string
+	newClientMapString = clientMapString.replace(cssArrayPattern, '$1,$2' + registrationString);
+
+	logger.info('registerCssFile: insertion is completed:\n' + newClientMapString);
+
+	return newClientMapString;
 }
 
 module.exports = {

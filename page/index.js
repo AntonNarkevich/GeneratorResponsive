@@ -2,7 +2,7 @@
 var util = require('util');
 var yeoman = require('yeoman-generator');
 var fs = require('fs');
-var helper = require('../logic/helper');
+var helper = require('../logic/clientMapRegistrationHelper');
 var log4js = require('log4js');
 var logger = log4js.getLogger();
 
@@ -46,6 +46,8 @@ PageGenerator.prototype.files = function files() {
 	this.template('page.js', 'sources/js/' + this.name + '.js');
 	this.template('page.less', 'sources/less/' + this.name + '.less');
 
+	console.log('Registration new files in clientMap.js');
+
 	var clientMapFileName = 'sources/js/clientMap.js';
 
 	//Registration in the clientMap.js
@@ -55,18 +57,20 @@ PageGenerator.prototype.files = function files() {
 		logger.trace('PageGenerator.prototype.files: clentMap data is:\n' + data);
 
 		if (err) {
-			logger.error('Couldn\'t read clientMap.js to register new page.');
-			throw err;
+			logger.error('Couldn\'t read clientMap.js to register new page.\n' + err);
+			console.warn('Couldn\'t read clientMap.js. You have to register it manually.');
 		}
 
+		//Process the string twice to register css and js.
 		newClientMapString = helper.registerJsFile(that.name, data);
+		newClientMapString = helper.registerCssFile(that.name, newClientMapString);
 
 		logger.trace('PageGenerator.prototype.files: writing to ' + clientMapFileName);
 
 		fs.writeFile(clientMapFileName, newClientMapString, 'utf8', function (err) {
 			if (err) {
 				logger.error('Couldn\'t write to clientMap.js to register new page: ' + err);
-				throw err;
+				console.warn('Couldn\'t writer to clientMap.js. You have to register it manually.');
 			}
 		});
 	});
