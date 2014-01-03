@@ -1,6 +1,6 @@
 {
 	"name": "generator-responsive",
-	"version": "0.3.3",
+	"version": "0.3.4",
 	"description": "A generator for Yeoman",
 	"keywords": [
 		"yeoman-generator",
