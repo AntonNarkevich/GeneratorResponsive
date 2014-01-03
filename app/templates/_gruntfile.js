@@ -20,6 +20,9 @@ module.exports = function (grunt) {
 		uploader: uploader,
 		filesToUpload: filesToUpload.split(','),
 
+		s3Key: s3Key,
+		s3Secret: s3Secret,
+
 		//cleans output folder
 		clean: {
 			build: {

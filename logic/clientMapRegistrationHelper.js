@@ -1,5 +1,7 @@
 "use strict";
 var log4js = require('log4js');
+var log4jsConfig = require('../log4js.json');
+log4js.configure(log4jsConfig);
 var logger = log4js.getLogger();
 
 /**
@@ -44,14 +46,14 @@ function registerJsFile(pageName, clientMapString) {
 			'[\\s\\S]*?' +	//Array content, any symbols.
 			'(\\s*)' +	//Getting whites before the last element to keep the aligning.
 			'(?:{[^{]*?}))' +	//Object literal without nested objects.
-			'(?:[^,])'	//	Doesn't have "," in the end. So it's the last in array.
+			'(?=[^,])'	//	Doesn't have "," in the end. So it's the last in array.
 	);
 
 	callbackName = getJsCallbackName(pageName);
 
 	logger.trace('registerJsFile: callbackName is ' + callbackName);
 
-	registrationString = "{ src: 'pageName.js', contentCondition: ['#SomeUniqueElementIdFromThePage'], callback: 'callBackName'}\n"
+	registrationString = "{ src: 'pageName.js', contentCondition: ['#SomeUniqueElementIdFromThePage'], callback: 'callBackName'}"
 		.replace('pageName', pageName)
 		.replace('callBackName', callbackName);
 
@@ -78,10 +80,10 @@ function registerCssFile(pageName, clientMapString) {
 			'[\\s\\S]*?' +	//Array content, any symbols.
 			'(\\s*)' +	//Getting whites before the last element to keep the aligning.
 			'(?:{[^{]*?}))' +	//Object literal without nested objects.
-			'(?:[^,])'	//	Doesn't have "," in the end. So it's the last in array.
+			'(?=[^,])'	//	Doesn't have "," in the end. So it's the last in array.
 	);
 
-	registrationString = "{ href: '../css/pageName.css', contentCondition: ['#SomeUniqueElementIdFromThePage']}\n"
+	registrationString = "{ href: '../css/pageName.css', contentCondition: ['#SomeUniqueElementIdFromThePage']}"
 		.replace('pageName', pageName);
 
 	logger.trace('registerCssFile: registrationString is ' + registrationString);

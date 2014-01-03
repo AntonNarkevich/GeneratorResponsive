@@ -3,7 +3,11 @@ var util = require('util');
 var yeoman = require('yeoman-generator');
 var fs = require('fs');
 var helper = require('../logic/clientMapRegistrationHelper');
+
 var log4js = require('log4js');
+//Can't just set filename. Cur. dir. is set to the generated project folder.
+var log4jsConfig = require('../log4js.json');
+log4js.configure(log4jsConfig);
 var logger = log4js.getLogger();
 
 var PageGenerator = module.exports = function PageGenerator(args, options, config) {
