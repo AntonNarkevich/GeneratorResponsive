@@ -8,6 +8,9 @@ module.exports = function (grunt) {
 	var uploader = grunt.option('uploader') || 'default';
 	var filesToUpload = grunt.option('filesToUpload') || '';
 
+	var s3Key = '<%= s3Key %>';
+	var s3Secret = '<%= s3Secret %>';
+
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
@@ -179,46 +182,37 @@ module.exports = function (grunt) {
 
 		less: {
 			qa: {
-				options: {
-					paths: ["./sources/less"]
-				},
-				files: {
-					"<%%= buildPath %>/sources/css/purchaseDetails.css": "sources/less/purchaseDetails.less",
-					"<%%= buildPath %>/sources/css/annualPass.css": "sources/less/annualPass.less",
-					"<%%= buildPath %>/sources/css/cart.css": "sources/less/cart.less",
-					"<%%= buildPath %>/sources/css/popups.css": "sources/less/popups.less",
-					"<%%= buildPath %>/sources/css/master.css": "sources/less/master.less",
-					"<%%= buildPath %>/sources/css/reviewCheckout.css": "sources/less/reviewCheckout.less",
-					"<%%= buildPath %>/sources/css/addOnsMain.css": "sources/less/addOnsMain.less",
-					"<%%= buildPath %>/sources/css/confirm.css": "sources/less/confirm.less",
-					"<%%= buildPath %>/sources/css/itemTableHelper.css": "sources/less/itemTableHelper.less"
-				}
+				files: [
+					{
+						expand: true,
+						cwd: 'sources/less',
+						src: ['*.less'],
+						dest: '<%%= buildPath %>/sources/css/',
+						ext: '.css'
+					}
+				]
 			},
-
 			prod: {
 				options: {
-					paths: ["./sources/less"],
 					cleancss: true
 				},
-				files: {
-					"<%%= buildPath %>/sources/css/purchaseDetails.css": "sources/less/purchaseDetails.less",
-					"<%%= buildPath %>/sources/css/annualPass.css": "sources/less/annualPass.less",
-					"<%%= buildPath %>/sources/css/cart.css": "sources/less/cart.less",
-					"<%%= buildPath %>/sources/css/popups.css": "sources/less/popups.less",
-					"<%%= buildPath %>/sources/css/master.css": "sources/less/master.less",
-					"<%%= buildPath %>/sources/css/reviewCheckout.css": "sources/less/reviewCheckout.less",
-					"<%%= buildPath %>/sources/css/addOnsMain.css": "sources/less/addOnsMain.less",
-					"<%%= buildPath %>/sources/css/confirm.css": "sources/less/confirm.less",
-					"<%%= buildPath %>/sources/css/itemTableHelper.css": "sources/less/itemTableHelper.less"
-				}
+				files: [
+					{
+						expand: true,
+						cwd: 'sources/less',
+						src: ['*.less'],
+						dest: '<%%= buildPath %>/sources/css/',
+						ext: '.css'
+					}
+				]
 			}
 		},
 
 		// s3 management
 		s3: {
 			options: {
-				key: '<%= s3Key %>',
-				secret: '<%= s3Secret %>',
+				key: '<%%= s3Key %>',
+				secret: '<%%= s3Secret %>',
 				bucket: 'responsive-qa',
 				access: 'bucket-owner-full-control',
 				maxOperations: 10,

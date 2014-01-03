@@ -39,12 +39,12 @@ GeneratorResponsiveGenerator.prototype.askFor = function askFor() {
 		},
 		{
 			name: 's3Key',
-			message: 'What is your s3 key? You can set it later.',
+			message: 'What is your s3 key? You can set it later in gruntfile.js.',
 			default: 'HereShouldBeYourS3Key'
 		},
 		{
 			name: 's3Secret',
-			message: 'What is your s3 secret? You can set it later.',
+			message: 'What is your s3 secret? You can set it later in gruntfile.js.',
 			default: 'HereShouldBeYourS3Secret'
 		}
 	];
@@ -95,4 +95,5 @@ GeneratorResponsiveGenerator.prototype.app = function app() {
 
 	this.mkdir('sources/fonts');
 	this.mkdir('sources/images');
+	this.mkdir('sources/templates');
 };
